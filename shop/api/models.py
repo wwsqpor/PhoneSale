@@ -3,6 +3,17 @@ from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
 
+class ProductManager(models.Manager):
+    def cheap_products(self):
+        return self.filter(price__lte=200000)
+
+    def medium_products(self):
+        return self.filter(price__gt=200000, price__lte=500000)
+
+    def expensive_products(self):
+        return self.filter(price_gt=500000)
+
+
 class Company(models.Model):
     name = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
@@ -41,6 +52,9 @@ class Product(models.Model):
         choices=ScreenTechnology.choices, 
         default=ScreenTechnology.OLED
     )
+
+    objects = models.Manager() # The default manager
+    smart_queries = ProductManager() # The custom manager
 
     def __str__(self):
         return f"{self.company.name} {self.name}"
