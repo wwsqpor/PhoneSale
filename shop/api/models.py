@@ -1,6 +1,6 @@
 from django.db import models
+from django.conf import settings
 from django.utils.translation import gettext_lazy as _
-from django.conf import settings # Add this import at the top
 
 
 class Company(models.Model):
@@ -10,6 +10,10 @@ class Company(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = "Company"
+        verbose_name_plural = "Companies"
 
 
 class Product(models.Model):
@@ -41,13 +45,11 @@ class Product(models.Model):
     def __str__(self):
         return f"{self.company.name} {self.name}"
 
-class CartItem(models.Model):
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,  # This points to the built-in User
-        on_delete=models.CASCADE, 
-        related_name='cart'
-    )
-    # ... rest of your fields ...
+    class Meta:
+        verbose_name = "Product"
+        verbose_name_plural = "Products"
+
+
 class Review(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
     text = models.TextField()
@@ -60,6 +62,13 @@ class Review(models.Model):
         TERRIBLE = 1, _("1 Star")
 
     rating = models.IntegerField(choices=Score.choices, default=Score.EXCELLENT)
+
+    def __str__(self):
+        return f"{self.product} {self.rating}"
+
+    class Meta:
+        verbose_name = "Review"
+        verbose_name_plural = "Reviews"
 
 
 class CartItem(models.Model):
@@ -74,3 +83,7 @@ class CartItem(models.Model):
 
     def __str__(self):
         return f"{self.quantity} x {self.product.name} in {self.user.username}'s cart"
+
+    class Meta:
+        verbose_name = "Cart Item"
+        verbose_name_plural = "Cart Items"
