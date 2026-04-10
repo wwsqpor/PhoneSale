@@ -16,9 +16,3 @@ class UserSerializer(serializers.ModelSerializer):
             email=validated_data.get('email', '')
         )
         return user
-
-
-class UsersSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['id', 'username', 'password', 'email']
