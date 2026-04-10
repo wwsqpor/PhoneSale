@@ -5,6 +5,7 @@ from rest_framework import status
 from ..models import Product
 from ..serializers.products import ProductSummarySerializer
 
+
 @api_view(['GET'])
 def product_summary_list(request):
     products_summary = Product.objects.all()
