@@ -1,0 +1,40 @@
+<div class="detail">
+  <img [src]="phone?.image" />
+
+  <h2>{{ phone?.name }}</h2>
+
+  <p><b>💰 Price:</b> {{ phone?.price }}$</p>
+  <p><b>📅 Year:</b> {{ phone?.year }}</p>
+
+  <p><b>💾 Memory:</b> {{ phone?.memory }}</p>
+  <p><b>📷 Camera:</b> {{ phone?.camera }}</p>
+  <p><b>🔋 Battery:</b> {{ phone?.battery }}</p>
+
+  <p>{{ phone?.description }}</p>
+  <div class="detail-actions">
+
+  <button (click)="like()" class="like-btn">
+    {{ phone?.liked ? '❤️ Liked' : '🤍 Like' }}
+  </button> 
+
+  <button (click)="addToCart()" class="cart-btn">
+    🛒 Add to Cart
+  </button>
+
+  <button (click)="buyNow()" class="buy-btn">
+    ⚡ Buy Now
+  </button>
+
+  <button routerLink="/cart" class="go-cart-btn">
+    🛍 Go to Cart
+  </button>
+
+  <div class="notification" *ngIf="showNotification">
+    {{ message }}
+  </div>
+  @if (showNotification) {
+    <div class="notification">
+      {{ message }}
+    </div>
+  }
+</div>

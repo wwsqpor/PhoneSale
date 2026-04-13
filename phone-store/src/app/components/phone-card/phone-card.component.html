@@ -1,0 +1,24 @@
+<div class="card">
+  <img [src]="phone.image" (click)="open()" />
+
+  <h3>{{ phone.name }}</h3>
+  <p> {{ phone.price }}$</p>
+
+  <div class="actions">
+    <button (click)="like()">
+      {{ phone.liked ? '❤️' : '🤍' }}
+    </button>
+
+    <button (click)="addToCart()">
+      🛒
+    </button>
+    <button (click)="buyNow()" class="buy-now">
+    ⚡Buy now
+    </button>
+    @if (showNotification) {
+      <div class="notification">
+        {{ message }}
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<!-- brand-list.component.html -->
+<app-navbar (searchEvent)="filter($event)"></app-navbar>
+<div class="tabs">
+  <button (click)="load('Samsung')">Samsung</button>
+  <button (click)="load('iPhone')">iPhone</button>
+  <button (click)="load('Oppo')">Oppo</button>
+  <button (click)="load('Xiaomi')">Xiaomi</button>
+</div>
+
+<div class="phones">
+  @for (phone of phones; track phone.id) {
+    <app-phone-card [phone]="phone"></app-phone-card>
+  }
+</div>
