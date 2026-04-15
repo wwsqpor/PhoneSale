@@ -1,43 +1,33 @@
-<div class="detail">
-  <h2>🛒 Cart</h2>
+<div class="cart-page">
+  <h2>🛒 Your Cart</h2>
 
   <div class="cart-items">
     @for (item of cart.getItems(); track item.id) {
-      <div class="cart-card">
-
-        <img [src]="item.image" />
-
-        <div class="info">
-          <h3>{{ item.name }}</h3>
-          <p>💰 {{ item.price }}$</p>
-
-          <div class="actions">
-
-            <button (click)="like(item)">
-      {{ item.liked ? '❤️' : '🤍' }}
-            </button>
-
-            <button (click)="add(item)">
-              ➕
-            </button>
-
-            <button (click)="remove(item.id)">
-              ❌
-            </button>
-
-          </div>
-        </div>
+    <div class="cart-card">
+      <img [src]="item.image" [alt]="item.name" />
+      <div class="info">
+        <h3>{{ item.name }}</h3>
+        <p>{{ item.price }}$</p>
       </div>
+      <div class="actions">
+        <button (click)="like(item)" title="Like">{{ item.liked ? '❤️' : '🤍' }}</button>
+        <button (click)="add(item)" title="Add one more">➕</button>
+        <button (click)="remove(item.id)" title="Remove">✕</button>
+      </div>
+    </div>
     }
   </div>
-  <div class="cart-summary">
-    <h3>💰 Total: {{ getTotal() }} $</h3>
 
-    <button class="buy-btn" (click)="buy()">
-      🛍 Buy
-    </button>
+  <div class="empty-state" *ngIf="cart.getItems().length === 0">
+    <div class="empty-icon">🛒</div>
+    <h3>Cart is empty</h3>
+    <p>Add some phones first!</p>
   </div>
-  <div class="notification" *ngIf="showNotification">
-    {{ message }}
+
+  <div class="cart-summary" *ngIf="cart.getItems().length > 0">
+    <h3>Total: <span>{{ getTotal() }}$</span></h3>
+    <button class="buy-btn" (click)="buy()">🛍 Checkout</button>
   </div>
+
+  <div class="notification" *ngIf="showNotification">{{ message }}</div>
 </div>

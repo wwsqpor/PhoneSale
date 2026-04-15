@@ -8,7 +8,10 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class ProductSummarySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Product
-        fields = ("name", "price", "description")
+# Plain Serializer (не ModelSerializer) — для требований
+class ProductSummarySerializer(serializers.Serializer):
+    name = serializers.CharField()
+    price = serializers.DecimalField(max_digits=10, decimal_places=2)
+    description = serializers.CharField()
+    brand = serializers.CharField()
+    image = serializers.CharField()

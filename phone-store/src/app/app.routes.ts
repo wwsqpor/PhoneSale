@@ -10,6 +10,6 @@ export const routes: Routes = [
   { path: 'phone/:id', component: PhoneDetailComponent },
   { path: 'support', component: SupportComponent },
   { path: 'cart', component: CartComponent },
-  { path: '', redirectTo: '', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path: '**', redirectTo: '' }
 ];

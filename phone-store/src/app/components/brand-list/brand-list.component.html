@@ -1,14 +1,26 @@
-<!-- brand-list.component.html -->
 <app-navbar (searchEvent)="filter($event)"></app-navbar>
-<div class="tabs">
-  <button (click)="load('Samsung')">Samsung</button>
-  <button (click)="load('iPhone')">iPhone</button>
-  <button (click)="load('Oppo')">Oppo</button>
-  <button (click)="load('Xiaomi')">Xiaomi</button>
+
+<div class="page-header">
+  <h1>Find Your Phone</h1>
+  <p>Premium smartphones, best prices</p>
 </div>
 
+<div class="tabs">
+  <button (click)="load('')">✦ All</button>
+  <button (click)="load('Samsung')">Samsung</button>
+  <button (click)="load('iPhone')">iPhone</button>
+  <button (click)="load('Xiaomi')">Xiaomi</button>
+  <button (click)="load('Oppo')">Oppo</button>
+</div>
+
+<div class="error-banner" *ngIf="errorMessage">{{ errorMessage }}</div>
+
 <div class="phones">
-  @for (phone of phones; track phone.id) {
-    <app-phone-card [phone]="phone"></app-phone-card>
-  }
+  <app-phone-card *ngFor="let phone of phones" [phone]="phone"></app-phone-card>
+</div>
+
+<div class="empty-state" *ngIf="phones.length === 0 && !errorMessage">
+  <div class="empty-icon">📭</div>
+  <h3>No phones found</h3>
+  <p>Try a different search</p>
 </div>

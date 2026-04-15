@@ -11,7 +11,7 @@ class ProductManager(models.Manager):
         return self.filter(price__gt=200000, price__lte=500000)
 
     def expensive_products(self):
-        return self.filter(price_gt=500000)
+        return self.filter(price__gt=500000)
 
 
 class Company(models.Model):
@@ -32,15 +32,23 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     description = models.TextField()
     company = models.ForeignKey(Company, on_delete=models.PROTECT, related_name='products')
-    
-    # Product's characteristics
+
+    # Angular-compatible fields
+    brand = models.CharField(max_length=100, default='')
+    year = models.PositiveIntegerField(default=2023)
+    image = models.CharField(max_length=500, default='')
+    memory = models.CharField(max_length=50, default='')
+    camera = models.CharField(max_length=100, default='')
+    battery = models.CharField(max_length=50, default='')
+
+    # Phone characteristics
     is_lte = models.BooleanField(default=True)
-    os = models.CharField(max_length=50)
-    sim_cards_quantity = models.PositiveIntegerField()
+    os = models.CharField(max_length=50, default='')
+    sim_cards_quantity = models.PositiveIntegerField(default=1)
     supports_5g = models.BooleanField(default=False)
     supports_nfc = models.BooleanField(default=True)
-    color = models.CharField(max_length=50)
-    screen_refresh_rate = models.PositiveIntegerField(help_text="Hz")
+    color = models.CharField(max_length=50, default='')
+    screen_refresh_rate = models.PositiveIntegerField(default=60, help_text="Hz")
 
     class ScreenTechnology(models.TextChoices):
         LCD = "LCD", _("LCD")
@@ -48,13 +56,13 @@ class Product(models.Model):
         AMOLED = "AMOLED", _("AMOLED")
 
     screen_tech = models.CharField(
-        max_length=10, 
-        choices=ScreenTechnology.choices, 
+        max_length=10,
+        choices=ScreenTechnology.choices,
         default=ScreenTechnology.OLED
     )
 
-    objects = models.Manager() # The default manager
-    smart_queries = ProductManager() # The custom manager
+    objects = models.Manager()
+    smart_queries = ProductManager()
 
     def __str__(self):
         return f"{self.company.name} {self.name}"
@@ -87,8 +95,8 @@ class Review(models.Model):
 
 class CartItem(models.Model):
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, #Built-in User
-        on_delete=models.CASCADE, 
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
         related_name='cart'
     )
     product = models.ForeignKey(Product, on_delete=models.CASCADE)

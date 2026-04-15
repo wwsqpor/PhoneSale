@@ -1,31 +1,18 @@
-<div class="navbar">
+<nav class="navbar">
   <div class="logo" routerLink="/">
-    <img src="logo.png" />
+    <div class="logo-icon">📱</div>
     <span>PhoneStore</span>
   </div>
 
   <div class="search-box">
-    <input 
-      [(ngModel)]="search" 
-      (keyup.enter)="onSearch()"
-      placeholder="🔍 Search phones..." 
-    />
+    <input [(ngModel)]="search" (keyup.enter)="onSearch()" placeholder="Search phones..." />
     <button (click)="onSearch()">Search</button>
   </div>
 
   <div class="nav-actions">
-    <button routerLink="/support" class="nav-btn support-btn">
-      🛠 Support
-    </button>
-
-    <button routerLink="/cart" class="nav-btn cart-btn">
-      🛒 Cart
-    </button>
-    <button routerLink="/login">
-      🔐 Login
-    </button>
-    <button (click)="logout()">
-      🚪 Logout
-    </button>
+    <button routerLink="/support" class="nav-btn support-btn">🛠 Support</button>
+    <button routerLink="/cart" class="nav-btn cart-btn">🛒 Cart</button>
+    <button routerLink="/login" class="nav-btn">🔐 Login</button>
+    <button (click)="logout()" class="nav-btn">🚪 Logout</button>
   </div>
-</div>
+</nav>

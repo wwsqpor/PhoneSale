@@ -1,24 +1,18 @@
 <div class="card">
-  <img [src]="phone.image" (click)="open()" />
+  <div class="card-img-wrap" (click)="open()">
+    <img [src]="phone.image" [alt]="phone.name" />
+  </div>
 
   <h3>{{ phone.name }}</h3>
-  <p> {{ phone.price }}$</p>
+  <div class="card-price">
+    {{ phone.price }}<span>$</span>
+  </div>
 
   <div class="actions">
-    <button (click)="like()">
-      {{ phone.liked ? '❤️' : '🤍' }}
-    </button>
-
-    <button (click)="addToCart()">
-      🛒
-    </button>
-    <button (click)="buyNow()" class="buy-now">
-    ⚡Buy now
-    </button>
-    @if (showNotification) {
-      <div class="notification">
-        {{ message }}
-      </div>
-    }
+    <button (click)="like()">{{ phone.liked ? '❤️' : '🤍' }}</button>
+    <button (click)="addToCart()">🛒</button>
+    <button (click)="buyNow()" class="buy-now">⚡ Buy</button>
   </div>
+
+  <div class="notification" *ngIf="showNotification">{{ message }}</div>
 </div>

@@ -19,6 +19,7 @@ export class CartService {
   remove(id: number) {
     this.cart = this.cart.filter(p => p.id !== id);
   }
+
   clear() {
     this.cart = [];
   }

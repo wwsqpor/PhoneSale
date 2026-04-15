@@ -10,8 +10,8 @@ import { PhoneCardComponent } from '../phone-card/phone-card.component';
   standalone: true,
   imports: [
     CommonModule,
-    NavbarComponent,      
-    PhoneCardComponent    
+    NavbarComponent,
+    PhoneCardComponent
   ],
   templateUrl: './brand-list.component.html'
 })
@@ -19,24 +19,32 @@ export class BrandListComponent implements OnInit {
 
   phones: Phone[] = [];
   allPhones: Phone[] = [];
+  errorMessage = '';
 
-  constructor(private service: PhoneService) {}
+  constructor(private service: PhoneService) { }
 
   ngOnInit() {
-    this.service.getPhones().subscribe((data: any) => {
-      this.phones = data;
-      this.allPhones = data;
-    });
-    this.service.getTestApi().subscribe({
-      next: (data) => console.log('API OK', data),
-      error: () => console.log('API ERROR')
+    this.service.getPhones().subscribe({
+      next: (data: Phone[]) => {
+        this.phones = data;
+        this.allPhones = data;
+      },
+      error: (err) => {
+        this.errorMessage = 'Failed to load phones. Check server connection.';
+        console.error('Error loading phones:', err);
+      }
     });
   }
 
   load(brand: string) {
-    this.service.getByBrand(brand).subscribe(data => {
-      this.phones = data;
-    });
+    if (!brand) {
+      this.phones = this.allPhones;
+      return;
+    }
+
+    this.phones = this.allPhones.filter(p =>
+      p.brand.toLowerCase() === brand.toLowerCase()
+    );
   }
 
   filter(text: string) {
